@@ -6,10 +6,10 @@ var kort= require('dawa-kort')
 
 var map;
 
-let host= 'https://dawa.aws.dk';
+let host= 'https://api.dataforsyningen.dk';
 let miljø= util.getQueryVariable('m');
 if (miljø) {
-  host= host.replace('dawa',miljø); 
+  host= host.replace('api',miljø); 
 } 
 
 function getMap() {
