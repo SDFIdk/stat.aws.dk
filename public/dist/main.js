@@ -16876,7 +16876,7 @@ exports.viskort = function(id,ticket,options) {
             maxZoom: 14,
             minZoom: 2,
             ticket: ticket,
-	  		attribution: 'Data</a> fra <a href="https://api.dataforsyningen.dk">DAWA</a> | Map data &copy;  <a href="https://sdfe.dk">SDFE</a>',
+	  		attribution: 'Data</a> fra <a href="https://dawadocs.dataforsyningen.dk">DAWA</a> | Map data &copy;  <a href="https://sdfe.dk">SDFE</a>',
 	  		layers: layer,
 	  		styles: styles,
 	  		transparent: transparent,
