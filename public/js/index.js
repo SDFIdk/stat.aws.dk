@@ -126,7 +126,22 @@ var options= {
   ]
 };
 
+var token = 'd902ac31b1c3ff2d3e7f6aa7073c6c67';
+
 function main() { 
+  options.baselayer= "Skærmkort - dæmpet";
+  //options.preferCanvas= true;      
+  map= kort.viskort('map', token, options);
+  map.scrollWheelZoom.disable();
+  info.addTo(map);
+  legend.addTo(map);
+  var center= kort.beregnCenter();
+  map.setView(center,2);
+  gennemløbhændelser(map);
+}
+
+
+/* function main() { 
   fetch('/getticket').then(function (response) {
     response.text().then(function (ticket) {
       options.baselayer= "Skærmkort - dæmpet";
@@ -140,7 +155,7 @@ function main() {
       gennemløbhændelser(map);
     });
   });  
-}
+} */
 
 async function gennemløbhændelser(map) {
   // Forespøgelsel af hændelser spillets op i perioder for at undgå netværksproblemer ved en enkel forespørgelse med mange hændelser.

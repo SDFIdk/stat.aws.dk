@@ -16700,7 +16700,22 @@ var options= {
   ]
 };
 
+var token = 'd902ac31b1c3ff2d3e7f6aa7073c6c67';
+
+
 function main() { 
+    options.baselayer= "Skærmkort - dæmpet";
+    //options.preferCanvas= true;      
+    map= kort.viskort('map', token, options);
+    map.scrollWheelZoom.disable();
+    info.addTo(map);
+    legend.addTo(map);
+    var center= kort.beregnCenter();
+    map.setView(center,2);
+    gennemløbhændelser(map);
+}
+
+/* function main() { 
   fetch('/getticket').then(function (response) {
     response.text().then(function (ticket) {
       options.baselayer= "Skærmkort - dæmpet";
@@ -16714,7 +16729,7 @@ function main() {
       gennemløbhændelser(map);
     });
   });  
-}
+} */
 
 async function gennemløbhændelser(map) {
   // Forespøgelsel af hændelser spillets op i perioder for at undgå netværksproblemer ved en enkel forespørgelse med mange hændelser.
@@ -16851,7 +16866,7 @@ exports.beregnCenter= function() {
   return L.latLng(x,y);
 };
 
-exports.viskort = function(id,ticket,options) {
+exports.viskort = function(id,token,options) {
 	var crs = new L.Proj.CRS('EPSG:25832',
     '+proj=utm +zone=32 +ellps=GRS80 +units=m +no_defs', 
     {
@@ -16875,7 +16890,7 @@ exports.viskort = function(id,ticket,options) {
             format: 'image/png',
             maxZoom: 14,
             minZoom: 2,
-            ticket: ticket,
+            token: token,
 	  		attribution: 'Data</a> fra <a href="https://dawadocs.dataforsyningen.dk">DAWA</a> | Map data &copy;  <a href="https://sdfe.dk">SDFE</a>',
 	  		layers: layer,
 	  		styles: styles,
