@@ -16715,22 +16715,6 @@ function main() {
     gennemløbhændelser(map);
 }
 
-/* function main() { 
-  fetch('/getticket').then(function (response) {
-    response.text().then(function (ticket) {
-      options.baselayer= "Skærmkort - dæmpet";
-      //options.preferCanvas= true;      
-      map= kort.viskort('map', ticket, options);
-      map.scrollWheelZoom.disable();
-      info.addTo(map);
-      legend.addTo(map);
-      var center= kort.beregnCenter();
-      map.setView(center,2);
-      gennemløbhændelser(map);
-    });
-  });  
-} */
-
 async function gennemløbhændelser(map) {
   // Forespøgelsel af hændelser spillets op i perioder for at undgå netværksproblemer ved en enkel forespørgelse med mange hændelser.
   var t1

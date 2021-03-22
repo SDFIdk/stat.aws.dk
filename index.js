@@ -20,15 +20,6 @@ app.get('/', function (req, res) {
   });
 });
 
-/* app.get('/getticket', function (req, res, next) { 
-  kf.getTicket(usr,pw).then((ticket) => {
-    res.status(200).send(ticket);
-  })
-  .catch((err) => {
-    res.status(400).send('Ukendt username og password: ' + err);
-  });
-});  */
-
 app.get('/oisbygninger', function (req, res, next) {
   if (!req.query.format ||  !req.query.x || !req.query.y || !req.query.medtagugyldige) {
     res.status(400).send('mangler queryparametre');
@@ -50,11 +41,7 @@ app.get('/oisbygninger', function (req, res, next) {
   .catch((err) => {
     res.status(500).send('fejl i request af OIS bygninger: ' + err);
   });
-}); 
-
-/* var usr= process.argv[2]
-  , pw= process.argv[3]
-  , port= process.argv[4]; */
+});
 
 var port = process.argv[4];
 
@@ -66,15 +53,3 @@ var server = app.listen(port, function () {
 
   console.log('URL http://%s:%s', host, port);
 });
-
-/* kf.getTicket(usr,pw).then(ticket => {
-  var server = app.listen(port, function () {
-    var host = server.address().address;
-    var port = server.address().port;
-
-    console.log('URL http://%s:%s', host, port);
-  });
-})
-.catch(err => {
-  console.log("Ukendt username og password (%s)",err);
-}); */
