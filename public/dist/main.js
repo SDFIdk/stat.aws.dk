@@ -4627,7 +4627,7 @@ exports.formatAdgangsadresse= function (record, enlinje) {
 	}
 	else {
 		return formatAa(record.vejnavn, record.husnr, record.supplerendebynavn, record.postnr, record.postnrnavn, enlinje);
-	}	
+	}
 }
 
 exports.formatAdresse= function (mini, enlinje) {
@@ -4638,7 +4638,7 @@ exports.formatAdresse= function (mini, enlinje) {
 	return mini.vejnavn + " " + mini.husnr + etagedør + supplerendebynavn + separator + mini.postnr + " " + mini.postnrnavn
 }
 
-exports.danUrl= function (path, query) { 
+exports.danUrl= function (path, query) {
   var params = new URLSearchParams();
   Object.keys(query).forEach(function(key) {params.set(key, query[key])});
   return path + "?" + params.toString();
@@ -16583,27 +16583,11 @@ var map;
 let host= 'https://api.dataforsyningen.dk';
 let miljø= util.getQueryVariable('m');
 if (miljø) {
-  host= host.replace('api',miljø); 
-} 
+  host= host.replace('api',miljø);
+}
 
 function getMap() {
   return map;
-}
-
-var fra= moment(util.getQueryVariable('fra'),'YYYYMMDD');
-if (!fra.isValid()) {
-  alert('fra=' + fra + ' er ikke en gyldig dato');
-}
-
-var til= moment(util.getQueryVariable('til'),'YYYYMMDD');
-if (!til.isValid()) {
-  alert('til=' + til + ' er ikke en gyldig dato');
-}
-til.add({days: 1});
-
-
-if (!fra.isBefore(til)) {
-  alert('fra dato er senere end til dato');
 }
 
 var radius= util.getQueryVariable('radius');
@@ -16628,7 +16612,7 @@ console.log('update: '+update);
 var info = L.control();
 
 info.onAdd = function (map) {
-    this._div = L.DomUtil.create('div', 'info'); 
+    this._div = L.DomUtil.create('div', 'info');
     this.update();
     return this._div;
 };
@@ -16648,7 +16632,7 @@ info.update = function () {
       '<p>' + ændrede + ' ændrede</p>' +
       '<p>' + nedlagte + ' nedlagte</p>';
       ;
-  
+
 };
 
 var legend = L.control({position: 'bottomright'});
@@ -16657,7 +16641,7 @@ legend.onAdd = function (map) {
 
   var div = L.DomUtil.create('div', 'info legend');
 
-  
+
   div.innerHTML=
           '<p><i style="background: red"></i> Oprettet</p>' +
           '<p><i style="background: orange"></i> Ændret</p>' +
@@ -16703,9 +16687,9 @@ var options= {
 var token = 'd902ac31b1c3ff2d3e7f6aa7073c6c67';
 
 
-function main() { 
+function main() {
     options.baselayer= "Skærmkort - dæmpet";
-    //options.preferCanvas= true;      
+    //options.preferCanvas= true;
     map= kort.viskort('map', token, options);
     map.scrollWheelZoom.disable();
     info.addTo(map);
@@ -16737,7 +16721,7 @@ async function gennemløbhændelser(map) {
 function enperiode (map, fra, til) {
 
   return new Promise((resolve, reject) => {
-    let url = util.danUrl(host + '/replikering/adgangsadresser/haendelser', {tidspunktfra: fra.utc().toISOString(), tidspunkttil: til.utc().toISOString(), ndjson: true}); 
+    let url = util.danUrl(host + '/replikering/adgangsadresser/haendelser', {tidspunktfra: fra.utc().toISOString(), tidspunkttil: til.utc().toISOString(), ndjson: true});
     //console.log(url);
     fetch(url).then(function (response) { //'?tidspunktfra=2014-11-28T18:59:02.045Z&tidspunkttil=2014-12-01T18:59:02.045Z&ndjson').then(function (response) {
       const reader= response.body.getReader();
@@ -16772,14 +16756,14 @@ function enperiode (map, fra, til) {
         return reader.read().then(processText);
       });
 
-    });  
+    });
   });
 }
 
 var adgangsadresserid;
 function placerAdgangsadresse(map, linje) {
   total++;
-  //console.log(linje);  
+  //console.log(linje);
   var hændelse= JSON.parse(linje);
   tid= moment(hændelse.tidspunkt).local().format('DD.MM.YYYY HH:mm:ss');
   //console.log(hændelse);
@@ -16802,9 +16786,9 @@ function placerAdgangsadresse(map, linje) {
     }
   if (total%update === 0) info.update();
   if (hændelse.operation === 'update' && adgangsadresserid === hændelse.data.id) return;
-  adgangsadresserid= hændelse.data.id;  
+  adgangsadresserid= hændelse.data.id;
   var placering= kort.etrs89towgs84(hændelse.data.etrs89koordinat_øst,hændelse.data.etrs89koordinat_nord);
-  var marker= L.circleMarker(L.latLng(placering.y, placering.x), {color: color, fillColor: color, stroke: true, fillOpacity: 1.0, radius: radius, weight: 2, opacity: 1.0}).addTo(map);//defaultpointstyle); 
+  var marker= L.circleMarker(L.latLng(placering.y, placering.x), {color: color, fillColor: color, stroke: true, fillOpacity: 1.0, radius: radius, weight: 2, opacity: 1.0}).addTo(map);//defaultpointstyle);
 }
 
 main();
@@ -16819,7 +16803,7 @@ main();
 
 
 var dawautil= __webpack_require__(1)
-  , URLSearchParams = __webpack_require__(2)  
+  , URLSearchParams = __webpack_require__(2)
   , dawaois= __webpack_require__(125);
 
 proj4.defs([
@@ -16852,7 +16836,7 @@ exports.beregnCenter= function() {
 
 exports.viskort = function(id,token,options) {
 	var crs = new L.Proj.CRS('EPSG:25832',
-    '+proj=utm +zone=32 +ellps=GRS80 +units=m +no_defs', 
+    '+proj=utm +zone=32 +ellps=GRS80 +units=m +no_defs',
     {
         resolutions: [1638.4, 819.2, 409.6, 204.8, 102.4, 51.2, 25.6, 12.8, 6.4, 3.2, 1.6, 0.8, 0.4, 0.2, 0.1]
     }
@@ -16869,7 +16853,7 @@ exports.viskort = function(id,token,options) {
   var map = new L.Map(id, options);
 
   function danKort(service,layer,styles,transparent) {
-    return L.tileLayer.wms('https://api.dataforsyningen.dk/' + service, 
+    return L.tileLayer.wms('https://api.dataforsyningen.dk/' + service,
         {
             format: 'image/png',
             maxZoom: 14,
@@ -16974,7 +16958,7 @@ exports.viskort = function(id,token,options) {
 };
 
 exports.etrs89towgs84= function(x,y) {
-	  return proj4('EPSG:25832','EPSG:4326', {x:x, y:y});  
+	  return proj4('EPSG:25832','EPSG:4326', {x:x, y:y});
 };
 
 exports.geojsontowgs84= function(geojson) {
@@ -16997,8 +16981,8 @@ exports.nærmesteAdgangsadresse= function(getMap) {
       else if (response.status >= 200 && response.status <=299 ){
         return response.json();
       }
-    }) 
-    .then( function ( adgangsadresse ) { 
+    })
+    .then( function ( adgangsadresse ) {
 
       var x= adgangsadresse.adgangspunkt.koordinater[1]
         , y= adgangsadresse.adgangspunkt.koordinater[0];
@@ -17039,13 +17023,13 @@ exports.nærmesteBygning= function(getMap) {
       else if (response.status >= 200 && response.status <=299 ){
         return response.json();
       }
-    }) 
+    })
     .then( function ( bygninger ) {
       var bygning= bygninger[0];
       var punkt=  L.latLng(bygning.bygningspunkt.koordinater[1], bygning.bygningspunkt.koordinater[0]);
       var marker= L.circleMarker(punkt, {color: 'blue', fillColor: 'blue', stroke: true, fillOpacity: 1.0, radius: 4, weight: 2, opacity: 1.0}).addTo(getMap());//defaultpointstyle);
       var popup= marker.bindPopup(L.popup().setContent("<a target='_blank' href='" + url + "'>" + dawaois.anvendelseskoder[bygning.BYG_ANVEND_KODE] + " fra " + bygning.OPFOERELSE_AAR + "</a>"),{autoPan: true});
-      
+
       getMap().setView(punkt,12);
       popup.openPopup();
     //  map.fitBounds(geojsonlayer.getBounds());
@@ -17068,8 +17052,8 @@ exports.nærmesteVejstykke= function(getMap) {
       else if (response.status >= 200 && response.status <=299 ){
         return response.json();
       }
-    }) 
-    .then( function ( vejstykke ) { 
+    })
+    .then( function ( vejstykke ) {
       var layer= L.geoJSON(vejstykke).addTo(getMap());
       var popup= layer.bindPopup("<a target='_blank' href='https://api.dataforsyningen.dk/vejstykker?kode="+vejstykke.properties.kode+"&kommunekode="+vejstykke.properties.kommunekode+"'>" + vejstykke.properties.navn + " (" + vejstykke.properties.kode + ")" + "</a>");
       popup.openPopup();
@@ -17132,11 +17116,11 @@ exports.hvor= function(getMap) {
     promises[antal].format= formatstednavne;
     antal++;
 
-    Promise.all(promises) 
+    Promise.all(promises)
     .catch(function (error) {
       alert(error.message);
     })
-    .then(function(responses) {      
+    .then(function(responses) {
       for (var i= responses.length-1; i>=0; i--) {
         if (responses[i].ok) {
           responses[i]= responses[i].json();
@@ -17153,8 +17137,8 @@ exports.hvor= function(getMap) {
       let tekst= '<small><ul>';
       for(let i=0; i<data.length; i++) {
         tekst= tekst + promises[i].format(data[i]);
-      } 
-      tekst= tekst + "</ul></small>";     
+      }
+      tekst= tekst + "</ul></small>";
       var punkt=  e.latlng;
       var popup = L.popup()
       .setLatLng(punkt)
