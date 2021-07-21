@@ -9,27 +9,11 @@ var map;
 let host= 'https://api.dataforsyningen.dk';
 let miljø= util.getQueryVariable('m');
 if (miljø) {
-  host= host.replace('api',miljø); 
-} 
+  host= host.replace('api',miljø);
+}
 
 function getMap() {
   return map;
-}
-
-var fra= moment(util.getQueryVariable('fra'),'YYYYMMDD');
-if (!fra.isValid()) {
-  alert('fra=' + fra + ' er ikke en gyldig dato');
-}
-
-var til= moment(util.getQueryVariable('til'),'YYYYMMDD');
-if (!til.isValid()) {
-  alert('til=' + til + ' er ikke en gyldig dato');
-}
-til.add({days: 1});
-
-
-if (!fra.isBefore(til)) {
-  alert('fra dato er senere end til dato');
 }
 
 var radius= util.getQueryVariable('radius');
@@ -54,7 +38,7 @@ console.log('update: '+update);
 var info = L.control();
 
 info.onAdd = function (map) {
-    this._div = L.DomUtil.create('div', 'info'); 
+    this._div = L.DomUtil.create('div', 'info');
     this.update();
     return this._div;
 };
@@ -74,7 +58,7 @@ info.update = function () {
       '<p>' + ændrede + ' ændrede</p>' +
       '<p>' + nedlagte + ' nedlagte</p>';
       ;
-  
+
 };
 
 var legend = L.control({position: 'bottomright'});
@@ -83,7 +67,7 @@ legend.onAdd = function (map) {
 
   var div = L.DomUtil.create('div', 'info legend');
 
-  
+
   div.innerHTML=
           '<p><i style="background: red"></i> Oprettet</p>' +
           '<p><i style="background: orange"></i> Ændret</p>' +
@@ -128,9 +112,9 @@ var options= {
 
 var token = 'd902ac31b1c3ff2d3e7f6aa7073c6c67';
 
-function main() { 
+function main() {
   options.baselayer= "Skærmkort - dæmpet";
-  //options.preferCanvas= true;      
+  //options.preferCanvas= true;
   map= kort.viskort('map', token, options);
   map.scrollWheelZoom.disable();
   info.addTo(map);
@@ -162,7 +146,7 @@ async function gennemløbhændelser(map) {
 function enperiode (map, fra, til) {
 
   return new Promise((resolve, reject) => {
-    let url = util.danUrl(host + '/replikering/adgangsadresser/haendelser', {tidspunktfra: fra.utc().toISOString(), tidspunkttil: til.utc().toISOString(), ndjson: true}); 
+    let url = util.danUrl(host + '/replikering/adgangsadresser/haendelser', {tidspunktfra: fra.utc().toISOString(), tidspunkttil: til.utc().toISOString(), ndjson: true});
     //console.log(url);
     fetch(url).then(function (response) { //'?tidspunktfra=2014-11-28T18:59:02.045Z&tidspunkttil=2014-12-01T18:59:02.045Z&ndjson').then(function (response) {
       const reader= response.body.getReader();
@@ -197,14 +181,14 @@ function enperiode (map, fra, til) {
         return reader.read().then(processText);
       });
 
-    });  
+    });
   });
 }
 
 var adgangsadresserid;
 function placerAdgangsadresse(map, linje) {
   total++;
-  //console.log(linje);  
+  //console.log(linje);
   var hændelse= JSON.parse(linje);
   tid= moment(hændelse.tidspunkt).local().format('DD.MM.YYYY HH:mm:ss');
   //console.log(hændelse);
@@ -227,9 +211,9 @@ function placerAdgangsadresse(map, linje) {
     }
   if (total%update === 0) info.update();
   if (hændelse.operation === 'update' && adgangsadresserid === hændelse.data.id) return;
-  adgangsadresserid= hændelse.data.id;  
+  adgangsadresserid= hændelse.data.id;
   var placering= kort.etrs89towgs84(hændelse.data.etrs89koordinat_øst,hændelse.data.etrs89koordinat_nord);
-  var marker= L.circleMarker(L.latLng(placering.y, placering.x), {color: color, fillColor: color, stroke: true, fillOpacity: 1.0, radius: radius, weight: 2, opacity: 1.0}).addTo(map);//defaultpointstyle); 
+  var marker= L.circleMarker(L.latLng(placering.y, placering.x), {color: color, fillColor: color, stroke: true, fillOpacity: 1.0, radius: radius, weight: 2, opacity: 1.0}).addTo(map);//defaultpointstyle);
 }
 
 main();
